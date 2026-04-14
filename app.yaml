@@ -1,0 +1,202 @@
+# ============================================================
+# META SPEC: USER MANAGEMENT APP
+# ============================================================
+
+meta:
+  type: single page web application
+  framework: React
+  styling: Tailwind CSS
+  routing: React Router
+  responsive: mobile first
+  theme: dark
+  background_effect:
+    type: aurora_borealis
+    animation: flowing gradient ribbons
+    layer: full-viewport overlay filter
+    blend_mode: screen
+    opacity: medium_high
+    coverage: edge_to_edge
+  top_nav_toggle:
+    spec_ref: specs/shared/top_nav.yaml#top_nav.left_section.children
+    asset_ref: assets/disco-ball-chain-spark/CHAIN_SPARK_DISCO_BALL_EXACT.jsx#ChainSparkDiscoBallIcon
+    icon_id: disco_cosmic_moon
+    hover_effect: continuous disco sparkle field across viewport while hovering disco ball
+    sparkle_behavior_ref: specs/shared/disco_sparkles.yaml#sparkle_behavior
+  cursor:
+    spec_ref: specs/shared/squirrel_cursor.yaml#squirrel_cursor
+    asset_ref: assets/cosmic-squirrel/COSMIC_SQUIRREL_EXACT.jsx#CosmicSquirrelGlobalCursor
+
+implementation_policy:
+  asset_first_visuals: true
+  rule:
+    - use assets/* implementations for exact visual/runtime primitives
+    - use specs/* for behavior, layout, routing, and interaction contracts
+  immutable_asset_expectation:
+    - treat assets as canonical unless user explicitly requests changes
+
+config:
+  - config/colors.yaml
+  - config/copy.yaml
+  - config/tokens.yaml
+
+spec_validation:
+  required: true
+  required_keys:
+    app_yaml:
+      - meta
+      - meta.top_nav_toggle.spec_ref
+      - meta.top_nav_toggle.asset_ref
+      - meta.cursor.spec_ref
+      - meta.cursor.asset_ref
+      - config
+      - specs
+      - routing
+      - delivery
+    config_colors:
+      - colors.primary
+      - colors.background
+      - colors.surface
+      - colors.border
+      - colors.text_primary
+      - colors.text_secondary
+      - colors.error
+      - colors.overlay
+    config_copy:
+      - copy.app_title
+      - copy.nav
+      - copy.new_user_page
+      - copy.show_user_page
+    config_tokens:
+      - typography.font_family
+      - border_radius.sm
+      - border_radius.md
+      - spacing.nav_height
+      - spacing.sidenav_width
+      - shadow.surface
+      - shadow.sidenav
+    shared_specs:
+      - top_nav.left_section.children
+      - top_nav.left_section.children.hover_color
+      - top_nav.left_section.children.hover_background
+      - side_nav.nav_links
+      - side_nav.link_style.hover_background
+      - side_nav.link_style.hover_icon_color
+      - side_nav.link_style.hover_label_color
+      - field_style
+      - button_primary.hover_background
+      - button_outlined.hover_background
+      - button_outlined.hover_color
+      - squirrel_cursor.variant
+      - squirrel_cursor.implementation_asset_ref
+      - sparkle_behavior.compatible_icon_variant
+    page_specs:
+      - page.form
+      - page.profile_card
+      - page.sections
+
+specs:
+  assets:
+    - assets/cursor_variants.yaml
+    - assets/cosmic-squirrel/COSMIC_SQUIRREL_EXACT.jsx
+    - assets/cosmic-squirrel/cosmic-squirrel.css
+    - assets/disco-ball-chain-spark/CHAIN_SPARK_DISCO_BALL_EXACT.jsx
+    - assets/disco-ball-chain-spark/DISCO_SPARKLE_FIELD_EXACT.jsx
+    - assets/disco-ball-chain-spark/disco-sparkle-field.css
+  shared:
+    - specs/shared/top_nav.yaml
+    - specs/shared/side_nav.yaml
+    - specs/shared/form_primitives.yaml
+    - specs/shared/squirrel_cursor.yaml
+    - specs/shared/disco_sparkles.yaml
+  pages:
+    - specs/pages/new_user.yaml
+    - specs/pages/show_user.yaml
+    - specs/pages/cursor_lab.yaml
+
+routing:
+  - id: route_new_user
+    path: "/users/new"
+    spec: specs/pages/new_user.yaml
+  - id: route_show_user
+    path: "/users/:userId"
+    spec: specs/pages/show_user.yaml
+  - id: route_cursor_lab
+    path: "/cursor-lab"
+    spec: specs/pages/cursor_lab.yaml
+  - id: route_catch
+    path: "*"
+    behavior: redirect to "/users/new"
+
+delivery:
+  app_specific_requirements:
+    react_jsx_runtime:
+      required_vite_plugin: "@vitejs/plugin-react"
+      required_vite_config:
+        - "import react from '@vitejs/plugin-react'"
+        - "plugins: [react()]"
+      fallback_rule_if_plugin_missing:
+        - add_explicit_react_import_in_all_jsx_files: true
+  output_files:
+    bootstrap:
+      - index.html
+      - package.json
+      - vite.config.js
+      - postcss.config.js
+      - tailwind.config.js
+      - src/main.jsx
+      - src/index.css
+    pages:
+      - src/NewUserPage.jsx
+      - src/ShowUserPage.jsx
+      - src/CursorLabPage.jsx
+    app_router: src/App.jsx
+  regeneration_policy:
+    mode: full_rewrite_per_impacted_file
+    trigger:
+      - any change in config/*
+      - any change in specs/shared/*
+      - any change in specs/pages/*
+      - any routing change in app.yaml
+    rules:
+      - detect impacted generated files from current specs/config only
+      - impacted files may include pages, router file, and other generated app files
+      - delete each impacted generated file before writing replacement
+      - regenerate each impacted file from scratch using current config/spec references
+      - do not patch prior internals for impacted generated files; replace by full rewrite
+  verify:
+    checks:
+      - type: static_file_contains
+        file: "app/vite.config.js"
+        pattern: "@vitejs/plugin-react"
+      - type: static_file_contains
+        file: "app/vite.config.js"
+        pattern: "plugins: [react()]"
+      - type: static_file_contains
+        file: "app/src/index.css"
+        pattern: ".btn-primary:hover"
+      - type: static_file_contains
+        file: "app/src/index.css"
+        pattern: ".btn-outlined:hover"
+      - type: static_file_contains
+        file: "app/src/components/TopNav.jsx"
+        pattern: "hovered ? colors.primary"
+      - type: static_file_contains
+        file: "app/src/components/SideNav.jsx"
+        pattern: "hovered ? colors.background"
+      - type: route_renders
+        path: "/users/new"
+      - type: route_renders
+        path: "/users/usr_01"
+      - type: startup
+        requirement: "app starts locally without missing-file errors"
+
+output_report:
+  required: true
+  include:
+    - files_created_or_rewritten
+    - commands_executed
+    - verification_results
+    - unresolved_spec_errors
+  include_file_hashes:
+    algorithm: sha256
+    scope: generated_files

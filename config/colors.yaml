@@ -1,0 +1,20 @@
+# ============================================================
+# CONFIG: COLORS
+# ============================================================
+
+colors:
+  primary: "#E2E71A"
+  primary_hover: "#FF00FF"
+  background: "rgba(11,16,32,0.35)"
+  surface: "#121A2B"
+  border: "#2A3348"
+  text_primary: "#E5ECFF"
+  text_secondary: "#9AA7C7"
+  success: "#16A34A"
+  success_background: "#052E1A"
+  error: "#EF4444"
+  error_background: "#3A0B12"
+  overlay: "rgba(0,0,0,0.7)"
+  white: "#FFFFFF"
+  white_faint: "rgba(255,255,255,0.8)"
+  white_subtle: "rgba(255,255,255,0.2)"

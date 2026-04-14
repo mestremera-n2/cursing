@@ -1,0 +1,50 @@
+# ============================================================
+# CONFIG: COPY
+# ============================================================
+
+copy:
+  app_title: "User Management"
+  app_avatar: "AD"
+
+  nav:
+    dashboard: "Dashboard"
+    new_user: "New User"
+    cursor_lab: "Cursor Lab"
+    disco_lab: "Disco Lab"
+    settings: "Settings"
+    administration: "Administration"
+
+  new_user_page:
+    form_title: "Create New User"
+    form_subtitle: "asonethusnatoeh"
+    submit_button: "Create User"
+    submit_button_loading: "Creating User..."
+    api_error_fallback: "Something went wrong. Please try again."
+
+    fields:
+      first_name_label: "First Name"
+      first_name_placeholder: "John"
+      first_name_error: "First name must be at least 2 characters"
+      last_name_label: "Last Name"
+      last_name_placeholder: "Doe"
+      last_name_error: "Last name must be at least 2 characters"
+      email_label: "Email Address"
+      email_placeholder: "jane@example.com"
+      email_error: "Please enter a valid email address"
+      phone_label: "Phone Number"
+      phone_placeholder: "+1 (555) 867-5309"
+      phone_hint: "Optional"
+
+  show_user_page:
+    section_title: "Account Details"
+    not_found_title: "User Not Found"
+    not_found_message: "We could not load this user profile."
+    not_found_button: "Back to Create User"
+    btn_create_another: "Create Another User"
+    btn_edit_user: "Edit User"
+    phone_null_display: "Not provided"
+
+    detail_labels:
+      phone: "Phone"
+      member_since: "Member Since"
+      user_id: "User ID"

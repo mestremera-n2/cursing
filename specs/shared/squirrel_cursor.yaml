@@ -1,0 +1,19 @@
+# ============================================================
+# SHARED SPEC: SQUIRREL CURSOR
+# ============================================================
+
+squirrel_cursor:
+  type: simulated custom cursor
+  variant: cosmic_squirrel
+  visual: cosmic squirrel
+  implementation_asset_ref: assets/cosmic-squirrel/COSMIC_SQUIRREL_EXACT.jsx#CosmicSquirrelGlobalCursor
+  implementation_style_ref: assets/cosmic-squirrel/cosmic-squirrel.css
+  behavior:
+    - hide system cursor in app viewport
+    - render animated cosmic squirrel cursor element that follows pointer
+    - apply gentle bobbing animation
+    - disable custom cursor on touch devices
+  constraints:
+    - cursor element must use fixed positioning and pointer-events none
+    - pointer tracking and body animation must be separated so animation does not overwrite follow transform
+    - custom cursor must not render on touch/coarse pointer devices

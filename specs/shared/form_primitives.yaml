@@ -1,0 +1,62 @@
+# ============================================================
+# SHARED SPEC: FORM PRIMITIVES
+# ============================================================
+
+field_style:
+  layout: stacked, label above input
+  gap_between_fields: "20px"
+  label_font_size: "14px"
+  label_font_weight: "500"
+  label_color: config.colors.text_primary
+  label_margin_bottom: "6px"
+  input_height: "40px"
+  input_padding: "8px 12px"
+  input_font_size: "15px"
+  input_background: config.colors.surface
+  input_border: "1px solid config.colors.border"
+  input_border_radius: config.tokens.border_radius.sm
+  input_focus_border: "1px solid config.colors.primary"
+  input_focus_ring: "0 0 0 3px rgba(37,99,235,0.15)"
+  input_transition: "border 150ms ease, box-shadow 150ms ease"
+  input_error_border: "1px solid config.colors.error"
+  input_error_ring: "0 0 0 3px rgba(239,68,68,0.15)"
+  required_indicator:
+    character: "*"
+    color: config.colors.error
+    position: after label text
+  error_message:
+    font_size: "13px"
+    color: config.colors.error
+    margin_top: "4px"
+    position: below input
+
+button_primary:
+  background: config.colors.primary
+  hover_background: config.colors.primary_hover
+  color: config.colors.white
+  font_size: "14px"
+  font_weight: "500"
+  border_radius: config.tokens.border_radius.sm
+  transition: "background 150ms ease"
+
+button_outlined:
+  border: "1px solid config.colors.border"
+  background: config.colors.surface
+  hover_background: config.colors.background
+  hover_color: config.colors.text_primary
+  color: config.colors.text_primary
+  font_size: "14px"
+  font_weight: "500"
+  border_radius: config.tokens.border_radius.sm
+  transition: "background 150ms ease, color 150ms ease"
+
+api_error_banner:
+  background: config.colors.error_background
+  border: "1px solid config.colors.error"
+  border_radius: config.tokens.border_radius.sm
+  padding: "12px 16px"
+  font_size: "14px"
+  color: config.colors.error
+  visible_when: api call returns error
+  content: display error message returned from API or fallback
+    config.copy.new_user_page.api_error_fallback

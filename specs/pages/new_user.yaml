@@ -1,0 +1,160 @@
+# ============================================================
+# PAGE SPEC: NEW USER
+# ============================================================
+
+meta:
+  route: "/users/new"
+  title: config.copy.new_user_page.form_title
+
+includes:
+  - specs/shared/top_nav.yaml
+  - specs/shared/side_nav.yaml
+  - specs/shared/form_primitives.yaml
+
+page:
+  layout: centered column
+  padding: "48px 24px"
+  max_width: "560px"
+  margin_horizontal: auto
+  margin_top: config.tokens.spacing.nav_height
+  background: config.colors.background
+  min_height: "calc(100vh - 64px)"
+
+  form:
+    id: new_user_form
+    title: config.copy.new_user_page.form_title
+    title_font_size: "24px"
+    title_font_weight: "700"
+    title_color: config.colors.text_primary
+    title_margin_bottom: "8px"
+    subtitle: config.copy.new_user_page.form_subtitle
+    subtitle_font_size: "15px"
+    subtitle_color: config.colors.text_secondary
+    subtitle_margin_bottom: "32px"
+    background: config.colors.surface
+    border: "1px solid config.colors.border"
+    border_radius: config.tokens.border_radius.md
+    padding: "32px"
+    shadow: config.tokens.shadow.surface
+
+    fields:
+      - id: field_first_name
+        type: text input
+        label: config.copy.new_user_page.fields.first_name_label
+        placeholder: config.copy.new_user_page.fields.first_name_placeholder
+        required: true
+        autocomplete: "given-name"
+        validation:
+          min_length: 2
+          max_length: 50
+          error_message: config.copy.new_user_page.fields.first_name_error
+
+      - id: field_last_name
+        type: text input
+        label: config.copy.new_user_page.fields.last_name_label
+        placeholder: config.copy.new_user_page.fields.last_name_placeholder
+        required: true
+        autocomplete: "family-name"
+        validation:
+          min_length: 2
+          max_length: 50
+          error_message: config.copy.new_user_page.fields.last_name_error
+
+      - id: field_email
+        type: email input
+        label: config.copy.new_user_page.fields.email_label
+        placeholder: config.copy.new_user_page.fields.email_placeholder
+        required: true
+        autocomplete: "email"
+        validation:
+          format: valid email format
+          error_message: config.copy.new_user_page.fields.email_error
+
+      - id: field_phone
+        type: tel input
+        label: config.copy.new_user_page.fields.phone_label
+        placeholder: config.copy.new_user_page.fields.phone_placeholder
+        required: false
+        autocomplete: "tel"
+        hint_text: config.copy.new_user_page.fields.phone_hint
+        hint_style:
+          font_size: "12px"
+          color: config.colors.text_secondary
+          margin_left: "6px"
+
+    submit_button:
+      label: config.copy.new_user_page.submit_button
+      type: submit
+      width: full width
+      height: "42px"
+      margin_top: "28px"
+      style: button_primary
+      states:
+        loading:
+          label: config.copy.new_user_page.submit_button_loading
+          disabled: true
+          opacity: "0.7"
+          cursor: not-allowed
+          show_spinner: true
+          spinner: small white spinning circle, left of label text
+
+    api_error_banner:
+      style: api_error_banner
+      position: above submit button, below last field
+      margin_top: "20px"
+
+api:
+  create_user:
+    trigger: new_user_form valid submission
+    method: POST
+    endpoint: "/api/users"
+    headers:
+      Content-Type: "application/json"
+    request_body:
+      first_name: field_first_name value
+      last_name: field_last_name value
+      email: field_email value
+      phone: field_phone value, omit if empty
+    loading_state:
+      duration: from submit click until response received
+      behavior: disable form fields, show loading state on button
+    on_success:
+      condition: HTTP 200 or 201
+      expected_response_shape:
+        id: string
+        first_name: string
+        last_name: string
+        email: string
+        phone: string or null
+        created_at: ISO 8601 timestamp
+      behavior: redirect to "/users/:id" using id from response
+    on_error:
+      condition: any non-200/201 response or network failure
+      behavior:
+        - re-enable form fields
+        - restore submit button to default state
+        - display api_error_banner
+        - do not clear form fields
+
+  mock_mode:
+    enabled: true
+    behavior: simulate 800ms delay then return mock success response
+    mock_response:
+      id: "usr_01"
+      first_name: from field_first_name
+      last_name: from field_last_name
+      email: from field_email
+      phone: from field_phone or null
+      created_at: current timestamp ISO 8601
+
+constraints:
+  - validate all required fields on submit before api call
+  - do not call api if client validation fails
+  - show field-level errors inline below each invalid field
+  - clear field error on that field when user begins typing
+  - disable all fields and button during api call
+  - never clear field values on api error
+  - redirect must use router navigation not hard redirect
+  - top nav remains fixed during scroll
+  - sidenav sits above page content and does not push layout
+  - page content never obscured by top nav

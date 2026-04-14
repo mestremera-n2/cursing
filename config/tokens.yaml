@@ -1,0 +1,20 @@
+# ============================================================
+# CONFIG: TOKENS
+# ============================================================
+
+typography:
+  font_family: "Inter, system-ui, sans-serif"
+  size_base: "16px"
+
+border_radius:
+  sm: "6px"
+  md: "8px"
+  full: "9999px"
+
+spacing:
+  nav_height: "64px"
+  sidenav_width: "280px"
+
+shadow:
+  surface: "0 1px 3px rgba(0,0,0,0.1)"
+  sidenav: "4px 0 12px rgba(0,0,0,0.15)"

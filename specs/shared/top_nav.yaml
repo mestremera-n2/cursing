@@ -1,0 +1,57 @@
+# ============================================================
+# SHARED SPEC: TOP NAV
+# ============================================================
+
+top_nav:
+  position: fixed top, full width, z-index 50
+  height: config.tokens.spacing.nav_height
+  background: config.colors.surface
+  border_bottom: "1px solid config.colors.border"
+  shadow: config.tokens.shadow.surface
+  layout: horizontal, space-between, vertically centered
+  padding: "0 24px"
+
+  left_section:
+    children:
+      - id: disco_toggle_button
+        type: icon button
+        icon_id: disco_cosmic_moon
+        icon_variant: chain_spark_svg
+        implementation_asset_ref: assets/disco-ball-chain-spark/CHAIN_SPARK_DISCO_BALL_EXACT.jsx#ChainSparkDiscoBallIcon
+        color: config.colors.text_primary
+        hover_color: config.colors.primary
+        size: "28px"
+        border_radius: config.tokens.border_radius.sm
+        hover_background: config.colors.background
+        behavior:
+          on_click: toggle sidenav open/closed
+          on_hover: continuous disco sparkle field across viewport while hovering
+          aria_label: "Toggle navigation"
+          aria_expanded: reflects current sidenav state
+
+  center_section:
+    children:
+      - id: site_title
+        type: text
+        content: config.copy.app_title
+        font_size: "18px"
+        font_weight: "600"
+        color: config.colors.text_primary
+        position: absolutely centered in nav bar
+
+  right_section:
+    children:
+      - id: user_skittle
+        type: avatar button
+        shape: circle
+        size: "36px diameter"
+        background: config.colors.primary
+        content: config.copy.app_avatar
+        font_size: "14px"
+        font_weight: "600"
+        color: config.colors.white
+        border_radius: config.tokens.border_radius.full
+        hover_opacity: "0.85"
+        behavior:
+          on_click: noop
+          cursor: pointer

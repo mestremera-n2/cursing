@@ -1,0 +1,158 @@
+cursor_variants:
+  default: cosmic_squirrel
+  source_of_truth_for:
+    - global_cursor_variant_styles
+    - cursor_lab_variant_cards
+  variants:
+    - id: plush_chonk
+      name: Plush Chonk
+      description: Friendly plush mass with rounded forms.
+      preview_style:
+        body: '#D6A679'
+        tail: '#B97A56'
+        scale: 1.0
+        aura: none
+        shape: plush
+      global_style:
+        body: '#D6A679'
+        head: '#C38D5D'
+        tail: '#B97A56'
+        shape: plush
+        aura: none
+        scale: 1.0
+
+    - id: glyph_runner
+      name: Glyph Runner
+      description: Squirrel reduced to motion glyphs and marks.
+      preview_style:
+        body: '#E2E71A'
+        tail: '#9AA7C7'
+        scale: 0.94
+        aura: 'rgba(226,231,26,0.28)'
+        shape: glyph
+      global_style:
+        body: '#E2E71A'
+        head: '#E2E71A'
+        tail: '#9AA7C7'
+        shape: glyph
+        aura: 'rgba(226,231,26,0.24)'
+        scale: 0.96
+
+    - id: acorn_echo
+      name: Acorn Echo
+      description: Orbiting acorn rings imply squirrel presence.
+      preview_style:
+        body: '#C5925D'
+        tail: '#E1AE71'
+        scale: 0.98
+        aura: 'rgba(225,174,113,0.24)'
+        shape: orbit
+      global_style:
+        body: '#C5925D'
+        head: '#E1AE71'
+        tail: '#B97A56'
+        shape: orbit
+        aura: 'rgba(202,139,88,0.24)'
+        scale: 1.0
+
+    - id: forest_ink
+      name: Forest Ink
+      description: Brushstroke silhouette with ink-like tail sways.
+      preview_style:
+        body: '#98B18E'
+        tail: '#5D7C53'
+        scale: 0.96
+        aura: 'rgba(93,124,83,0.22)'
+        shape: brush
+      global_style:
+        body: '#98B18E'
+        head: '#6C8F64'
+        tail: '#5D7C53'
+        shape: plush
+        aura: 'rgba(93,124,83,0.2)'
+        scale: 0.98
+
+    - id: vector_paw
+      name: Vector Paw
+      description: Geometric paw-led cursor abstraction.
+      preview_style:
+        body: '#B9A2FF'
+        tail: '#7B61FF'
+        scale: 1.0
+        aura: 'rgba(123,97,255,0.24)'
+        shape: paw
+      global_style:
+        body: '#B9A2FF'
+        head: '#9E87E8'
+        tail: '#7B61FF'
+        shape: paw
+        aura: 'rgba(123,97,255,0.24)'
+        scale: 1.0
+
+    - id: wireframe_tail
+      name: Wireframe Tail
+      description: Line-art body and sweeping mesh tail.
+      preview_style:
+        body: '#A5F3FC'
+        tail: '#67E8F9'
+        scale: 1.03
+        aura: 'rgba(103,232,249,0.24)'
+        shape: wire
+      global_style:
+        body: '#A5F3FC'
+        head: '#67E8F9'
+        tail: '#0EA5E9'
+        shape: wire
+        aura: 'rgba(103,232,249,0.24)'
+        scale: 1.04
+
+    - id: totem_nut
+      name: Totem Nut
+      description: Stacked symbolic forms: ear, paw, tail, acorn.
+      preview_style:
+        body: '#DAB184'
+        tail: '#CA8B58'
+        scale: 1.01
+        aura: 'rgba(202,139,88,0.24)'
+        shape: totem
+      global_style:
+        body: '#DAB184'
+        head: '#CA8B58'
+        tail: '#B56F3E'
+        shape: totem
+        aura: 'rgba(218,177,132,0.24)'
+        scale: 1.01
+
+    - id: neon_scout
+      name: Neon Scout
+      description: Arcade-inspired glow with scanning whiskers.
+      preview_style:
+        body: '#8CF2FF'
+        tail: '#50D9FF'
+        scale: 1.02
+        aura: 'rgba(80,217,255,0.3)'
+        shape: neon
+      global_style:
+        body: '#8CF2FF'
+        head: '#50D9FF'
+        tail: '#1EB7E5'
+        shape: neon
+        aura: 'rgba(80,217,255,0.3)'
+        scale: 1.03
+
+    - id: cosmic_squirrel
+      name: Cosmic Squirrel
+      description: Celestial squirrel made of moon dust and stars.
+      preview_style:
+        body: '#DDD6FE'
+        tail: '#A5F3FC'
+        scale: 1.08
+        aura: 'rgba(196,181,253,0.36)'
+        shape: cosmic
+      global_style:
+        body: '#DDD6FE'
+        head: '#C4B5FD'
+        tail: '#A5F3FC'
+        shape: cosmic
+        aura: 'rgba(196,181,253,0.34)'
+        scale: 1.1

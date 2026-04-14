@@ -1,0 +1,158 @@
+# ============================================================
+# PAGE SPEC: SHOW USER
+# ============================================================
+
+meta:
+  route: "/users/:userId"
+  title: "User Profile"
+
+includes:
+  - specs/shared/top_nav.yaml
+  - specs/shared/side_nav.yaml
+  - specs/shared/form_primitives.yaml
+
+page:
+  layout: centered column
+  padding: "48px 24px"
+  max_width: "640px"
+  margin_horizontal: auto
+  margin_top: config.tokens.spacing.nav_height
+  background: config.colors.background
+  min_height: "calc(100vh - 64px)"
+
+  data_source:
+    data_mode: hybrid
+    on_mount: fetch user data from GET "/api/users/:userId"
+    mock_mode:
+      state_source: use data passed via router state from create response
+      fallback_source: deterministic local mock fixture keyed by userId
+      precedence_order:
+        - router_state_when_id_matches
+        - mock_fixture_by_userId
+        - error_not_found
+
+  loading_state:
+    display: centered spinner in page content area
+    spinner: 32px circle, color config.colors.primary, animated rotation
+    visible_when: data fetch in progress
+
+  error_state:
+    visible_when: data fetch fails or user not found
+    content:
+      icon: exclamation circle, 48px, color config.colors.error
+      title: config.copy.show_user_page.not_found_title
+      title_font_size: "20px"
+      title_font_weight: "600"
+      message: config.copy.show_user_page.not_found_message
+      button:
+        label: config.copy.show_user_page.not_found_button
+        href: "/users/new"
+        style: button_primary
+
+  profile_card:
+    background: config.colors.surface
+    border: "1px solid config.colors.border"
+    border_radius: config.tokens.border_radius.md
+    shadow: config.tokens.shadow.surface
+    overflow: hidden
+
+    header:
+      background: config.colors.primary
+      padding: "32px"
+      layout: horizontal, vertically centered, gap 20px
+
+      avatar:
+        type: circle
+        size: "72px"
+        background: config.colors.white_subtle
+        content: first letter of first_name + first letter of last_name, uppercase
+        font_size: "28px"
+        font_weight: "700"
+        color: config.colors.white
+
+      identity:
+        full_name:
+          content: first_name + " " + last_name from response
+          font_size: "22px"
+          font_weight: "700"
+          color: config.colors.white
+        email:
+          content: email from response
+          font_size: "14px"
+          color: config.colors.white_faint
+          margin_top: "4px"
+
+    body:
+      padding: "32px"
+
+      section_title:
+        content: config.copy.show_user_page.section_title
+        font_size: "13px"
+        font_weight: "600"
+        color: config.colors.text_secondary
+        text_transform: uppercase
+        letter_spacing: "0.05em"
+        margin_bottom: "16px"
+
+      detail_rows:
+        layout: stacked list of label/value pairs
+        gap: "0"
+        divider: "1px solid config.colors.border between each row"
+
+        rows:
+          - label: config.copy.show_user_page.detail_labels.phone
+            value: phone from response
+            value_if_null: config.copy.show_user_page.phone_null_display
+            value_color_if_null: config.colors.text_secondary
+            value_style_if_null: italic
+
+          - label: config.copy.show_user_page.detail_labels.member_since
+            value: created_at from response, formatted as "Month D, YYYY"
+
+          - label: config.copy.show_user_page.detail_labels.user_id
+            value: id from response
+            value_style:
+              font_family: monospace
+              font_size: "13px"
+              color: config.colors.text_secondary
+
+        row_style:
+          layout: horizontal, space-between, vertically centered
+          padding: "14px 0"
+          label_font_size: "14px"
+          label_font_weight: "500"
+          label_color: config.colors.text_primary
+          value_font_size: "14px"
+          value_color: config.colors.text_primary
+
+    footer:
+      padding: "20px 32px"
+      border_top: "1px solid config.colors.border"
+      background: config.colors.background
+      layout: horizontal, gap 12px, right aligned
+
+      buttons:
+        - id: btn_create_another
+          label: config.copy.show_user_page.btn_create_another
+          style: button_outlined
+          height: "38px"
+          padding: "0 16px"
+          behavior:
+            on_click: navigate to "/users/new"
+
+        - id: btn_edit_user
+          label: config.copy.show_user_page.btn_edit_user
+          style: button_primary
+          height: "38px"
+          padding: "0 16px"
+          behavior:
+            on_click: noop
+
+constraints:
+  - must handle case where userId in URL does not match any user
+  - must handle slow or failed data fetch gracefully
+  - all user data displayed must come from api response not form state
+    except when data_mode is hybrid and precedence_order resolves to router_state_when_id_matches
+  - top nav remains fixed during scroll
+  - sidenav sits above page content and does not push layout
+  - page content never obscured by top nav

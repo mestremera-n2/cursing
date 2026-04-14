@@ -1,0 +1,75 @@
+# ============================================================
+# SHARED SPEC: SIDE NAV
+# ============================================================
+
+side_nav:
+  position: fixed, left edge, top config.tokens.spacing.nav_height, full remaining height, z-index 40
+  width: config.tokens.spacing.sidenav_width
+  background: config.colors.surface
+  border_right: "1px solid config.colors.border"
+  shadow: config.tokens.shadow.sidenav
+  padding: "16px 0"
+
+  state:
+    default: closed
+    open: visible, translated to x:0
+    closed: hidden, translated to x:-100%
+    transition: "transform 250ms ease-in-out"
+
+  overlay:
+    type: full screen backdrop
+    background: config.colors.overlay
+    z_index: 30
+    visible_when: sidenav open
+    transition: "opacity 200ms ease"
+    behavior:
+      on_click: close sidenav
+
+  nav_links:
+    - id: nav_link_dashboard
+      label: config.copy.nav.dashboard
+      icon_id: grid_2x2
+      href: "#"
+    - id: nav_link_new_user
+      label: config.copy.nav.new_user
+      icon_id: person_plus
+      href: "/users/new"
+      active_when: current route is "/users/new"
+    - id: nav_link_cursor_lab
+      label: config.copy.nav.cursor_lab
+      icon_id: spark_cursor
+      href: "/cursor-lab"
+      active_when: current route is "/cursor-lab"
+    - id: nav_link_settings
+      label: config.copy.nav.settings
+      icon_id: gear_outline
+      href: "#"
+    - id: nav_link_administration
+      label: config.copy.nav.administration
+      icon_id: shield_outline
+      href: "#"
+
+  link_style:
+    layout: horizontal, icon left of label, vertically centered
+    padding: "10px 24px"
+    gap: "12px"
+    icon_size: "20px"
+    icon_color: config.colors.text_secondary
+    label_font_size: "15px"
+    label_font_weight: "500"
+    label_color: config.colors.text_primary
+    hover_background: config.colors.background
+    hover_icon_color: config.colors.primary
+    hover_label_color: config.colors.primary
+    transition: "background 150ms ease, color 150ms ease"
+    active_state:
+      background: "#EFF6FF"
+      label_color: config.colors.primary
+      icon_color: config.colors.primary
+      left_border: "3px solid config.colors.primary"
+
+  constraints:
+    - only one state at a time, open or closed
+    - body scroll locks when sidenav open on mobile
+    - escape key closes sidenav when open
+    - clicking any nav link closes sidenav

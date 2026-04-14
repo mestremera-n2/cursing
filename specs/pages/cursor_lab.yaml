@@ -1,0 +1,47 @@
+# ============================================================
+# PAGE SPEC: CURSOR LAB
+# ============================================================
+
+meta:
+  route: "/cursor-lab"
+  title: "Cursor Lab"
+
+includes:
+  - specs/shared/top_nav.yaml
+  - specs/shared/side_nav.yaml
+  - specs/shared/squirrel_cursor.yaml
+
+page:
+  layout: centered column
+  padding: "48px 24px"
+  max_width: "960px"
+  margin_horizontal: auto
+  margin_top: config.tokens.spacing.nav_height
+  background: config.colors.background
+  min_height: "calc(100vh - 64px)"
+
+  sections:
+    - id: intro
+      title: "Choose Cursor Style"
+      subtitle: "Pick a squirrel cursor implementation and preview it live, including original cosmic squirrel."
+
+    - id: variants
+      data_source: assets/cursor_variants.yaml#cursor_variants.variants
+      card_layout: responsive grid
+      behavior:
+        on_select: set selected global cursor implementation
+        persist_selected_variant: localStorage key "cursor_variant_id"
+        explore_concepts:
+          - literal mascot
+          - motion silhouette
+          - constellation abstraction
+          - functional pointer
+          - geometric planes
+          - pixel art
+          - high contrast silhouette
+
+constraints:
+  - selected variant updates global cursor immediately
+  - selection persists across route changes and reloads
+  - default selected variant is cosmic_squirrel
+  - disable custom cursor on touch/coarse pointer devices

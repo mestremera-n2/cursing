@@ -1,0 +1,88 @@
+# ============================================================
+# SHARED SPEC: DISCO SPARKLES
+# ============================================================
+
+sparkle_behavior:
+  mode: continuous_emitter_while_hover
+  profile: chain_spark_disco_sparkle
+  compatible_icon_variant: chain_spark_svg
+  implementation_asset_ref: assets/disco-ball-chain-spark/DISCO_SPARKLE_FIELD_EXACT.jsx#DiscoSparkleField
+  implementation_style_ref: assets/disco-ball-chain-spark/disco-sparkle-field.css
+  intent:
+    summary: disco shimmer tied to the chain spark top-nav toggle icon
+  deterministic:
+    enabled: true
+    seed: 19770327
+    emission_pattern: fixed_sequence_loop
+    note: no runtime randomness; particle attributes are derived from seed and particle index
+  trigger:
+    start: disco_button mouseenter
+    stop: disco_button mouseleave
+  emit_interval_ms: 120
+  emit_count_per_tick: 18
+  max_concurrent_particles: 220
+  stop_grace_ms: 220
+  animation: prism_twinkle_drift_rotate
+  start_delay_range_ms: [0, 200]
+  duration_range_ms: [700, 1900]
+  drift_x_range_px: [-21, 21]
+  drift_y_range_px: [-15, 15]
+  spin_range_deg: [-150, 150]
+  size_variants_px: [5, 8, 12, 16]
+  particle_families:
+    dot_ratio: 0.55
+    cross_ratio: 0.35
+    crescent_ratio: 0.10
+  shape_selection:
+    order: deterministic index modulo weighted family sequence
+    weighted_family_sequence:
+      - dot
+      - dot
+      - cross
+      - dot
+      - cross
+      - dot
+      - crescent
+      - dot
+  color_variants:
+    - "#FFFFFF"   # moon glint
+    - "#C4B5FD"   # lunar violet
+    - "#A5F3FC"   # cool orbit cyan
+    - "#E2E71A"   # disco accent
+  color_selection:
+    order: deterministic index modulo fixed color sequence
+    fixed_color_sequence:
+      - "#FFFFFF"
+      - "#A5F3FC"
+      - "#C4B5FD"
+      - "#E2E71A"
+      - "#A5F3FC"
+      - "#FFFFFF"
+  compositing:
+    blend_mode: screen
+    layer: fixed_full_viewport
+    pointer_events: none
+    z_index: 80
+  halo: strong_additive_glow
+  star_cross_ratio: 0.35
+  keyframes:
+    - at_percent: 0
+      opacity: 0
+      scale: 0.2
+      drift_factor: 0
+      spin_factor: 0
+    - at_percent: 22
+      opacity: 1
+      scale: 1.35
+      drift_factor: 0.25
+      spin_factor: 0.3
+    - at_percent: 70
+      opacity: 0.75
+      scale: 0.85
+      drift_factor: 0.75
+      spin_factor: 0.8
+    - at_percent: 100
+      opacity: 0
+      scale: 0.35
+      drift_factor: 1
+      spin_factor: 1
